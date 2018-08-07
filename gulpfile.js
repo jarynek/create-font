@@ -1,10 +1,7 @@
 const gulp = require('gulp');
-const path = require('path');
 const args = require('yargs').argv;
 const iconfont = require('gulp-iconfont');
 const iconfontCss = require('gulp-iconfont-css');
-const file = require('gulp-file');
-const watch = require('gulp-watch');
 const fontName = 'icons';
 
 /**
@@ -22,7 +19,7 @@ gulp.task('createFont', function () {
             fontName: fontName,
             fontHeight: 1001,
             normalize: true,
-            prependUnicode: true, // recommended option
+            prependUnicode: true,
             centerHorizontally: true
         }))
         .pipe(gulp.dest('./icons/' + args.arg + '/css'));
