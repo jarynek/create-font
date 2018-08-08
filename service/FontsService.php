@@ -8,7 +8,7 @@
 
 namespace App\Service;
 
-class CreateFontsService {
+class FontsService {
 
 	private $dir;
 	private $zip;

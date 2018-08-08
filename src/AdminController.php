@@ -8,15 +8,15 @@
 
 namespace App\Controller;
 
-use App\Service\CreateFontsService;
+use App\Service\FontsService;
 
 
 class AdminController {
 
-	private $create_font_service;
+	private $font_service;
 
 	public function __construct() {
-		$this->create_font_service = new CreateFontsService();
+		$this->font_service = new FontsService();
 	}
 
 	/**
@@ -24,11 +24,11 @@ class AdminController {
 	 */
 	public function homepageAction() {
 		try{
-			$this->create_font_service->uploadFiles();
-			$this->create_font_service->createFont();
-			$this->create_font_service->createReadme();
-			$this->create_font_service->zipPackage();
-			$this->create_font_service->cleanUp();
+			$this->font_service->uploadFiles();
+			$this->font_service->createFont();
+			$this->font_service->createReadme();
+			$this->font_service->zipPackage();
+			$this->font_service->cleanUp();
 		}catch (\Exception $exception){
 			echo $exception->getMessage();
 		}
@@ -39,7 +39,7 @@ class AdminController {
 	 */
 	public function downloadAction(){
 		try{
-			$this->create_font_service->downloadPackage();
+			$this->font_service->downloadPackage();
 		}catch (\Exception $exception){
 			echo $exception->getMessage();
 		}

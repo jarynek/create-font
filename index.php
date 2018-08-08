@@ -10,6 +10,11 @@ require_once( dirname( __FILE__ ) . '/config/service.php' );
 require_once( dirname( __FILE__ ) . '/config/bundles.php' );
 
 $AdminController = new \App\Controller\AdminController();
+$UserController = new \User\Controller\UserController();
+
+echo '<pre>';
+print_r($UserController->getUser());
+echo '</pre>';
 
 if(isset($_GET['download']) &&$_GET['download'] !== ''){
 	$AdminController->downloadAction();
