@@ -79,9 +79,9 @@ class CreateFontsService {
 	}
 
 	/**
-	 * downloadPackage
+	 * Download package
 	 */
-	public final function zipPackage(): void {
+	public function zipPackage(): void {
 
 		$filename = './icons/' . $this->dir . '.zip';
 		$result   = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator( './icons/' . $this->dir ) );
@@ -102,7 +102,28 @@ class CreateFontsService {
 		}
 		$this->zip->close();
 
-		header( 'Location: /?download=' . $this->dir . '' );
+		//header( 'Location: /?download=' . $this->dir . '' );
+	}
+
+	/**
+	 * Clean up
+	 */
+	public function cleanUp() {
+
+		if ( ! file_exists( './icons/' . $this->dir ) ) {
+			new \Exception( 'neni dir pro clean' );
+		}
+
+		$result = new \RecursiveIteratorIterator(
+			new \RecursiveDirectoryIterator('./icons/' . $this->dir, \RecursiveDirectoryIterator::SKIP_DOTS),
+			\RecursiveIteratorIterator::CHILD_FIRST
+		);
+
+		foreach ($result as $file) {
+			$fn = ($file->isDir() ? 'rmdir' : 'unlink');
+			$fn($file->getRealPath());
+		}
+		rmdir('./icons/' . $this->dir);
 	}
 
 	/**
@@ -111,16 +132,16 @@ class CreateFontsService {
 	public final function downloadPackage(): void {
 		if ( ! isset( $_GET['download'] ) && $_GET['download'] !== '' ) {
 			throw new \Exception( 'neni get nebo je empty' );
-		}elseif (!file_exists('./icons/' . $_GET['download'] . '.zip')){
+		} elseif ( ! file_exists( './icons/' . $_GET['download'] . '.zip' ) ) {
 			throw new \Exception( 'neni zip v icons' );
 		}
 
 		$fileName = './icons/' . $_GET['download'] . '.zip';
 
 		ob_end_clean();
-		header("Content-Type: application/zip");
-		header("Content-Disposition: attachment; filename=". pathinfo($fileName , PATHINFO_BASENAME));
-		header("Content-Length: " . filesize($fileName ));
-		readfile($fileName);
+		header( "Content-Type: application/zip" );
+		header( "Content-Disposition: attachment; filename=" . pathinfo( $fileName, PATHINFO_BASENAME ) );
+		header( "Content-Length: " . filesize( $fileName ) );
+		readfile( $fileName );
 	}
 }

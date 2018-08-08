@@ -28,6 +28,7 @@ class AdminController {
 			$this->create_font_service->createFont();
 			$this->create_font_service->createReadme();
 			$this->create_font_service->zipPackage();
+			$this->create_font_service->cleanUp();
 		}catch (\Exception $exception){
 			echo $exception->getMessage();
 		}
