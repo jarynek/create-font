@@ -101,8 +101,6 @@ class CreateFontsService {
 			$this->zip->addFile( $file->getPathname(), $newFile );
 		}
 		$this->zip->close();
-
-		//header( 'Location: /?download=' . $this->dir . '' );
 	}
 
 	/**
@@ -124,6 +122,11 @@ class CreateFontsService {
 			$fn($file->getRealPath());
 		}
 		rmdir('./icons/' . $this->dir);
+
+		/**
+		 * Redirect to download zip
+		 */
+		header( 'Location: /?download=' . $this->dir . '' );
 	}
 
 	/**
